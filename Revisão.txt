@@ -1,0 +1,31 @@
+--2
+db.veiculo.insertOne({placa:"ZZZ1234", modelo:"Uno", ano:2018, cor:"Amarelo", kmAtual: 0, viagens: []})
+
+--3
+db.veiculo.updateOne(
+    {viagens: []},
+    {$set: {viagens: [{
+        solicitante : "Luiz Gustavo",
+        data : "12/12/2019",
+        kmSaida : 0,
+        kmChegada : 1500
+        }]
+    }
+})
+
+--4
+
+--5
+
+--6
+db.veiculo.find({modelo: "L200"})
+
+--7
+
+--8
+db.veiculo.find({kmAtual: {$gt:100000}, kmAtual: {$lt: 200000}})
+
+--9
+db.veiculo.find().sort({placa:1}, {modelo:1})
+
+--10
