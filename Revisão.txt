@@ -1,9 +1,10 @@
 --2
 db.veiculo.insertOne({placa:"ZZZ1234", modelo:"Uno", ano:2018, cor:"Amarelo", kmAtual: 0, viagens: []})
 
+
 --3
 db.veiculo.updateOne(
-    {viagens: []},
+    {placa: "ZZZ1234"},
     {$set: {viagens: [{
         solicitante : "Luiz Gustavo",
         data : "12/12/2019",
@@ -13,19 +14,57 @@ db.veiculo.updateOne(
     }
 })
 
+
 --4
+db.veiculo.updateOne({placa:"XXX1230"}, {$push:{viagens:{solicitante:"FAFAH2",data:"27/11/2019", kmSaida:2500, kmChegada:2550}}})
+
 
 --5
+db.veiculo.update({placa:"XXX1230"}, {$pull:{viagens:{solicitante:"FAFAH2"}}})
+
 
 --6
-db.veiculo.find({modelo: "L200"})
+db.veiculo.find({modelo:"L200"})
+
 
 --7
+db.veiculo.find({placa:/0$/i})
+
 
 --8
 db.veiculo.find({kmAtual: {$gt:100000}, kmAtual: {$lt: 200000}})
 
+
 --9
 db.veiculo.find().sort({placa:1}, {modelo:1})
+db.veiculo.find({}, {placa:1, modelo:1}).sort({modelo:1})
+
 
 --10
+db.veiculo.find({modelo:"L200"}).count()
+
+
+--11
+db.veiculo.distinct("viagens.data")
+
+
+--12
+db.veiculo.find({$and: [{cor: {$eq:"branca"}},{kmAtual:{$gt: 350000}}]})
+
+
+--13
+db.veiculo.find({$and: [{ "viagens.data": {$lt : ISODate("2019-07-01")]}, {"viagens.data": {$gt: ISODate("2019-01-01")}}]}})
+
+
+--14
+db.veiculo.find({"viagens.solicitate":"Denival"})
+
+
+--15
+db.veiculo.insertOne({placa:"ABC1234", modelo:"Bis", ano:2015, cor:"Cinza", kmAtual:10000, viagens:[]})
+db.viagem.insertOne({solicitante:"Fafa", data: ISODate("2019-07-15"), kmSaida:10000, kmChegada:10020}) || objectId("abcd123")
+
+db.veiculo.updateOne({placa:"ABc1234"}, {$push:{viagens:{objectId("abcd123")}})
+
+
+--16
